@@ -1,6 +1,5 @@
 # Ignore the these folders
 others/
-Project\ 1/cassendra/event_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
