@@ -1,0 +1,15 @@
+# Download course exercises
+zip -r destination_file_name.zip .
+
+
+
+
+###################### REDSHIFT #############################
+# Show all tables in a RedShift database
+SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public';
+
+# List all user sessions
+SELECT * FROM STV_SESSIONS
+
+# Kill a session with `pid`
+SELECT pg_terminate_backend(pid)
