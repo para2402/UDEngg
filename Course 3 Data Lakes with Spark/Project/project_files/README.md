@@ -55,19 +55,27 @@ start_time, hour, day, week, month, year, weekday
 - Then the log files are processed  to fill the **users** and **time** dimension tables and **songplays** fact table.
 - To populate the **time** dimension the timestamps in the log file entries are parsed to generate hour, day, dayofweek, week, month, year fields.
 - While populating the **users** table, if a conflict occurs, the level of the user is updated.
+- The fact the dimension tables are written as parquet files into an S3 bucket.
 
 
 ## Deployement
 
-Following should be the contents of `dl.cfg`:
+1. Following should be the contents of `dl.cfg`:
+    ```
+    [AWS_CREDENTIALS]
+    AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY>
+    AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_KEY>
+    ```
 
-```
-[AWS_CREDENTIALS]
-AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY>
-AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_KEY>
-```
+2. Make sure the AWS EMR cluster is assigned appropriate roles to access AWS S3
 
-spark-submit etl.py --deploy-mode local
+3. Run the following command to execute the spark application:
+    ```spark-submit --master yarn --deploy-mode client etl.py```
 
 ## Project Files
 - ```etl.py``` reads data from S3, processes that data using Spark, and writes them back to S3 after being transformed using Apache Spark.
+
+# References
+- Udacity project description is used to complete the README.md file
+- AWS EMR docs
+- PySpark 3.0.1 Documentation
