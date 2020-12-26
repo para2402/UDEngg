@@ -17,9 +17,26 @@ SELECT pg_terminate_backend(pid)
 
 
 
+######################## AWS EMR ############################
+# Create EMR cluster (without --auto-terminate)
+aws emr create-cluster --name udacity_spark_cluster --use-default-roles --release-label emr-5.28.0 --instance-count 3 --applications Name=Spark  --ec2-attributes KeyName="udacity_spark_emr" --instance-type m5.xlarge
+
+# For ssh into EMR master node
+ssh -i ~/.ssh/udacity_spark_emr_ec2_private.pem hadoop@<emr-endpoint>
+
+# With Dynamic Port Forwarding (For Spark UI)
+## This command will NOT terminate. Keep it running in the terminal.
+ssh -i ~/.ssh/udacity_spark_emr_ec2_private.pem -N -D 8157 hadoop@<emr-endpoint>
+
+## Move private key to EMR Master node (Mostly this is NOT needed if EMR cluster is given the correct EC2 role and technically is NOT SAFE to move the private key to the server)
+scp -i ~/.ssh/udacity_spark_emr_ec2_private.pem C:\Users\JPara\.ssh\udacity_spark_emr_ec2_private.pem hadoop@<emr-endpoint>:/home/hadoop/
+
+
+
+
 ###################### APACHE SPARK #########################
 # To reduce spark-submit console logging level
 1) Go to `$SPARK_HOME/conf/`
-2) `cp log4j.properties.template log4j.properties`
-3) Edit `log4j.properties`:
+2) `cp log4j.properties.template log4j.properties` or create it if you don't have one by `touch log4j.properties`
+3) Edit `log4j.properties`. Add/ modify with the following line:
 	log4j.rootCategory=WARN, console

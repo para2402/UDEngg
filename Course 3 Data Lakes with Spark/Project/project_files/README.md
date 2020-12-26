@@ -60,7 +60,7 @@ start_time, hour, day, week, month, year, weekday
 
 ## Deployement
 
-1. Following should be the contents of `dl.cfg`:
+1. Following should be the contents of `dl.cfg` (Keep the access strings empty if the AWS EMR cluster is given the appropriate S3 and EC2 access roles):
     ```
     [AWS_CREDENTIALS]
     AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY>
