@@ -13,3 +13,13 @@ SELECT * FROM STV_SESSIONS
 
 # Kill a session with `pid`
 SELECT pg_terminate_backend(pid)
+
+
+
+
+###################### APACHE SPARK #########################
+# To reduce spark-submit console logging level
+1) Go to `$SPARK_HOME/conf/`
+2) `cp log4j.properties.template log4j.properties`
+3) Edit `log4j.properties`:
+	log4j.rootCategory=WARN, console
