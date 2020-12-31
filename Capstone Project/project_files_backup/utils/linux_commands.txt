@@ -1,0 +1,4 @@
+## Linux commands
+
+# List custom set AWS env vars
+printenv | grep "aws"
