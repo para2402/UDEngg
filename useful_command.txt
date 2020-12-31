@@ -5,30 +5,77 @@ zip -r destination_file_name.zip .
 
 
 ###################### REDSHIFT #############################
-# Show all tables in a RedShift database
+## Launch Redshift Cluster
+aws redshift create-cluster \
+--cluster-identifier udacity-cluster \
+--cluster-type multi-node \
+--node-type dc2.large \
+--number-of-nodes 2 \
+--db-name dev \
+--port 5439 \
+--master-username awsuser \
+--master-user-password Omsairam_2402 \
+--iam-roles arn:aws:iam::608432393717:role/dwhRole \
+--vpc-security-group-ids sg-07ccf075a9489c220 \
+--cluster-subnet-group-name udacity-cluster-subnet-group \
+--availability-zone us-west-2a \
+--publicly-accessible
+
+--------------------------------------------------------------
+
+## List Redshift Clusters
+aws redshift describe-clusters --output table \
+--query 'Clusters[*].{ClusterIdentifier:ClusterIdentifier,
+	 ClusterStatus:ClusterStatus,
+	 EndpointAddress:Endpoint.Address,
+	 EndpointPort:Endpoint.Port,
+	 PubliclyAccessible:PubliclyAccessible,
+	 NumberOfNodes:NumberOfNodes,
+	 AvailabilityZone:AvailabilityZone}'
+
+--------------------------------------------------------------
+
+## Delete Redshift Cluster
+aws redshift delete-cluster \
+--cluster-identifier udacity-cluster \
+--skip-final-cluster-snapshot
+
+--------------------------------------------------------------
+
+# SQL: Show all tables in a RedShift database
 SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public';
 
-# List all user sessions
+# SQL: List all user sessions
 SELECT * FROM STV_SESSIONS
 
-# Kill a session with `pid`
+# SQL: Kill a session with `pid`
 SELECT pg_terminate_backend(pid)
 
 
 
 
-######################## AWS EMR ############################
-# Create EMR cluster (without --auto-terminate)
-aws emr create-cluster --name udacity_spark_cluster --use-default-roles --release-label emr-5.28.0 --instance-count 3 --applications Name=Spark  --ec2-attributes KeyName="udacity_spark_emr" --instance-type m5.xlarge
 
-# For ssh into EMR master node
+######################## AWS EMR ############################
+## Create EMR cluster (without --auto-terminate)
+aws emr create-cluster \
+--name udacity_spark_cluster \
+--use-default-roles \
+--release-label emr-5.28.0 \
+--instance-count 3 \
+--applications Name=Spark  \
+--ec2-attributes KeyName="udacity_spark_emr" \
+--instance-type m5.xlarge
+
+--------------------------------------------------------------
+
+## For ssh into EMR master node
 ssh -i ~/.ssh/udacity_spark_emr_ec2_private.pem hadoop@<emr-endpoint>
 
-# With Dynamic Port Forwarding (For Spark UI)
-## This command will NOT terminate. Keep it running in the terminal.
+## Enable Dynamic Port Forwarding (For Spark UI)
+# This command will NOT terminate. Keep it running in the terminal.
 ssh -i ~/.ssh/udacity_spark_emr_ec2_private.pem -N -D 8157 hadoop@<emr-endpoint>
 
-## Move private key to EMR Master node (Mostly this is NOT needed if EMR cluster is given the correct EC2 role and technically is NOT SAFE to move the private key to the server)
+# Move private key to EMR Master node (Mostly this is NOT needed if EMR cluster is given the correct EC2 role and technically is NOT SAFE to move the private key to the server)
 scp -i ~/.ssh/udacity_spark_emr_ec2_private.pem C:\Users\JPara\.ssh\udacity_spark_emr_ec2_private.pem hadoop@<emr-endpoint>:/home/hadoop/
 
 
