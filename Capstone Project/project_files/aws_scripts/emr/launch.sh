@@ -72,5 +72,5 @@ aws emr create-cluster \
                   ]' \
 --scale-down-behavior TERMINATE_AT_TASK_COMPLETION \
 --region us-west-2 \
---enable-debugging \
---log-uri 's3n://jaipara-udacity-capstone/emr-logs/'
+# --enable-debugging \
+# --log-uri 's3n://jaipara-udacity-capstone/emr-logs/'
