@@ -1,0 +1,7 @@
+osrshvhj
+
+order placed by a customer involving products sold by sellers and was given a review "review_id"
+"qty" of each product in the order wach with a "unit_rate" leading to a total of "total"
+each order is completed in #installments
+
+order(order_id, customer_id, product_id, seller_id, review_id, qty, unit_rate, total, # installments/ order)
