@@ -4,4 +4,12 @@ order placed by a customer involving products sold by sellers and was given a re
 "qty" of each product in the order wach with a "unit_rate" leading to a total of "total"
 each order is completed in #installments
 
-order(order_id, customer_id, product_id, seller_id, review_id, qty, unit_rate, total, # installments/ order)
+
+order(order_id, customer_id, product_id, seller_id, review_id, qty, unit_rate, total, # installments/ order, time_to_deliver, average review_score per order)
+
+
+
+merging/ transforming:
+=====================
+1) product: merge translated categories with actual product table
+2) reviews: delete reviews with NULLs in review_id or order_id
