@@ -1,1 +1,2 @@
-zip -r project_files.zip . -x "data/*" "staging_data/*"
+rm -rf /home/workspace/project_files.zip; zip -r /home/workspace/project_files.zip /home/workspace/ -x "/h
+ome/workspace/data/*" "/home/workspace/staging_data/*" "/home/workspace/test_staging_data/*" "*/.ipynb_checkpoints/*" "*/__pycache__/*"
