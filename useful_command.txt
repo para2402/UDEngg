@@ -1,6 +1,7 @@
-# Download course exercises
+# Download from Udacity workspace
 zip -r destination_file_name.zip .
 
+rm -rf /home/workspace/project_files.zip; zip -r /home/workspace/project_files.zip /home/workspace/ -x "/home/workspace/data/*" "/home/workspace/staging_data/*" "/home/workspace/test_staging_data/*" "*/.ipynb_checkpoints/*" "*/__pycache__/*"
 
 
 
