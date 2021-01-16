@@ -29,5 +29,4 @@ calender_dim = spark.sql("""SELECT date,
                          """)
 
 calender_dim.write.parquet(STAGING_DATA_BUCKET + '/calender',
-                           mode='overwrite',
-                           partitionBy=['year'])
+                           mode='overwrite')
