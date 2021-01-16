@@ -1,5 +1,6 @@
 # Ignore the these folders
 others/
+old_capstone_files/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
