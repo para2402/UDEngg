@@ -17,15 +17,18 @@ category_translation = spark.read.csv(RAW_DATA_BUCKET + '/product_category_name_
 df.createOrReplaceTempView('product')
 category_translation.createOrReplaceTempView('translation')
 
-product_dim = spark.sql("""SELECT p.*, t.product_category_name_english AS product_category
+product_dim = spark.sql("""SELECT product_id,
+                                  product_category_name_english                AS product_category,
+                                  CAST(product_description_lenght AS SMALLINT) AS product_description_length,
+                                  CAST(product_photos_qty AS SMALLINT)         AS product_photos_qty,
+                                  CAST(product_weight_g AS SMALLINT)           AS product_weight_g,
+                                  CAST(product_length_cm AS SMALLINT)          AS product_length_cm,
+                                  CAST(product_height_cm AS SMALLINT)          AS product_height_cm,
+                                  CAST(product_width_cm AS SMALLINT)           AS product_width_cm                                  
                            FROM product p
-                           INNER JOIN translation t
+                           LEFT JOIN translation t
                                    ON p.product_category_name = t.product_category_name
-                        """) \
-                   .drop('product_category_name', 'product_name_lenght') \
-                   .withColumnRenamed('product_description_lenght',
-                                      'product_description_length') ## correct the column name "lenght" to "length"
-product_dim.createOrReplaceTempView('product')
+                        """)
 
 product_dim.repartition(5) \
            .write \

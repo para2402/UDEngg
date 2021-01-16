@@ -20,14 +20,13 @@ calender_dim = spark.sql("""SELECT DISTINCT CAST(order_purchase_timestamp AS DAT
 
 calender_dim.createOrReplaceTempView('calender')
 calender_dim = spark.sql("""SELECT date,
-                                   year(date) AS year,
-                                   month(date) AS month,
-                                   day(date) AS day,
-                                   dayofweek(date) AS dayOfWeek
+                                   CAST(year(date) AS SMALLINT) AS year,
+                                   CAST(month(date) AS SMALLINT) AS month,
+                                   CAST(day(date) AS SMALLINT) AS day,
+                                   CAST(dayofweek(date) AS SMALLINT) AS day_of_week
                             FROM calender
                             WHERE date IS NOT NULL
                          """)
-calender_dim.createOrReplaceTempView('calender')
 
 calender_dim.write.parquet(STAGING_DATA_BUCKET + '/calender',
                            mode='overwrite',
