@@ -25,6 +25,8 @@ Based on the observations made in the EDA, the following decisions have been mad
 
 ***Type of dimensional model/ schema:*** `STAR SCHEMA`
 
+![aad](F:\osrshvhj vjpara\osrshvhj Data Science\osrshvhj Udacity\Capstone Project\ERD diagram.jpg)
+
 #### DIMENSION Tables
 
 ```plsql
@@ -45,7 +47,7 @@ calender(calender_id, date, day,
 
 ```plsql
 order_item(
-           order_item_id,                          --> Artificial PK
+           id,                          --> Artificial PK
            order_id,                               --> orders
            customer_id,                            --> orders
            product_id,                             --> order_items
@@ -65,13 +67,18 @@ order_item(
            qty,                                    --> order_items (derived measure)
            total_product_price,                    --> (qty * product_unit_price)
            total_order_price,                      --> order_payments (derived measure)
-           avg_review_score,                       --> order_reviews (derived measure)
-          )
+           avg_review_score)                       --> order_reviews (derived measure)
 ```
 
 > ***Possible Project Extension:*** Additionally, we could also have a data mart for Accounting department with Payments as the FACT table and a data mart for Marketing department with Reviews as the FACT table.
 
-## ETL Pipeline
+## Olist ETL
+
+#### ETL Infrastructure
+
+![awd](F:\osrshvhj vjpara\osrshvhj Data Science\osrshvhj Udacity\Capstone Project\ETL diagram.png)
+
+#### ETL Pipeline
 
 ![adwd](F:\osrshvhj vjpara\osrshvhj Data Science\osrshvhj Udacity\Capstone Project\screenshots\Final 1.PNG)
 
